@@ -16,6 +16,7 @@ class NewCustomerScreen extends Component {
     super(props);
     this.state = {
       loading: false,
+      userDatas: usersData,
       phoneNumber: '',
       phoneNumberErr: false,
       phoneNumberErrMsg: '',
@@ -27,33 +28,21 @@ class NewCustomerScreen extends Component {
 
   componentDidMount() {}
 
-  _onChangePhone = (num) => {};
+  _onChangePhone = (num) => {
+    console.log('Mobile Number: ' + num);
+    // this.setState({
+    //   loading: true,
+    //   phoneNumber: num,
+    // });
 
-  /**
-   * search functionality
-   **/
-  handleSearch = (searchVal) => {
-    console.log('Search Term: ' + searchVal);
-    this.setState({
-      loading: true,
-      search_term: searchVal,
-    });
-    var FormattedQuery = searchVal.toLowerCase();
-    const data = this.state.customersList4Search.filter((items) => {
-      console.log('items.name.toLowerCase()' + items.name.toLowerCase());
-      if (items.name.toLowerCase().includes(FormattedQuery)) {
-        this.setState({
-          loading: false,
-        });
-        return true;
-      } else {
-        this.setState({
-          loading: false,
-        });
-        return false;
-      }
-    });
-    this.setState({customersList: data});
+    // this.state.userDatas.map((element) => {
+    //   if (element.num === num) {
+    //     this.setState({
+    //       loading: false,
+    //       name: element.name,
+    //     });
+    //   }
+    // });
   };
 
   render() {
@@ -79,25 +68,13 @@ class NewCustomerScreen extends Component {
             barStyle: 'light-content',
           }}
           barStyle="light-content"
-          containerStyle={{
-            backgroundColor: '#acbabf',
-            justifyContent: 'space-around',
-            height: wp('25%'),
-          }}
+          containerStyle={styles.headerContainerStyle}
         />
         <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
           <View style={{margin: wp('8%')}}>
             <View style={{flexDirection: 'column'}}>
               <View>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: 'normal',
-                    marginStart: 10,
-                    color: '#b3b5ba',
-                  }}>
-                  Mobile Number :
-                </Text>
+                <Text style={styles.labelText}>Mobile Number :</Text>
                 <Input
                   placeholder="Phone"
                   onChangeText={(val) => this._onChangePhone(val)}
@@ -106,32 +83,17 @@ class NewCustomerScreen extends Component {
                   autoCapitalize="none"
                   ref="PhoneNumberInput"
                   inputContainerStyle={{
-                    width: wp('80%'),
-                    backgroundColor: 'rgba(255, 255,255,0.9)',
-                    borderRadius: 12,
-                    paddingHorizontal: 10,
-                    fontSize: 12,
-                    color: '#ffffff',
-                    borderWidth: 1,
+                    ...styles.InputContainerStyle,
                     borderColor: this.state.phoneNumberErr ? 'red' : '#B0B0B0',
-                    marginTop: 10,
                   }}
-                  inputStyle={{fontSize: 16}}
+                  inputStyle={{fontSize: 14}}
                   onSubmitEditing={() => {
                     this.refs.NameInput.focus();
                   }}
                 />
               </View>
               <View>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: 'normal',
-                    marginStart: 10,
-                    color: '#b3b5ba',
-                  }}>
-                  Name :
-                </Text>
+                <Text style={styles.labelText}>Name :</Text>
                 <Input
                   placeholder="Name"
                   onChangeText={(val) => this._onChangeName(val)}
@@ -140,17 +102,10 @@ class NewCustomerScreen extends Component {
                   autoCapitalize="none"
                   ref="NameInput"
                   inputContainerStyle={{
-                    width: wp('80%'),
-                    backgroundColor: 'rgba(255, 255,255,0.9)',
-                    borderRadius: 12,
-                    paddingHorizontal: 10,
-                    fontSize: 12,
-                    color: '#ffffff',
-                    borderWidth: 1,
+                    ...styles.InputContainerStyle,
                     borderColor: this.state.nameErr ? 'red' : '#B0B0B0',
-                    marginTop: 10,
                   }}
-                  inputStyle={{fontSize: 16}}
+                  inputStyle={{fontSize: 14}}
                   onSubmitEditing={() => {
                     this.refs.NameInput.focus();
                   }}
@@ -176,12 +131,16 @@ class NewCustomerScreen extends Component {
   }
 }
 
-// define your styles
 const styles = StyleSheet.create({
   container: {
     width: wp('100%'),
     height: hp('100%'),
     backgroundColor: '#fff',
+  },
+  headerContainerStyle: {
+    backgroundColor: '#acbabf',
+    justifyContent: 'space-around',
+    height: wp('25%'),
   },
   addButtonView: {
     marginLeft: wp('2%'),
@@ -206,7 +165,45 @@ const styles = StyleSheet.create({
     fontSize: hp('3%'),
     fontWeight: 'bold',
   },
+  labelText: {
+    fontSize: 16,
+    fontWeight: 'normal',
+    marginStart: 10,
+    color: '#b3b5ba',
+  },
+  InputContainerStyle: {
+    width: wp('80%'),
+    backgroundColor: 'rgba(255, 255,255,0.9)',
+    borderRadius: 12,
+    paddingHorizontal: 10,
+    fontSize: 12,
+    color: '#ffffff',
+    borderWidth: 1,
+    marginTop: 10,
+  },
 });
 
-//make this component available to the app
+const usersData = [
+  {
+    id: 1,
+    name: 'Sudhi',
+    num: 8596857485,
+  },
+  {
+    id: 2,
+    name: 'Sree',
+    num: 7458965859,
+  },
+  {
+    id: 3,
+    name: 'Nithin',
+    num: 8596854541,
+  },
+  {
+    id: 4,
+    name: 'Sreenath',
+    num: 5263859548,
+  },
+];
+
 export default NewCustomerScreen;
