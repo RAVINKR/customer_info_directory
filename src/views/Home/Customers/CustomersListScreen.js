@@ -126,7 +126,6 @@ class CustomersListScreen extends Component {
       </Card>
     );
   };
-  
 
   render() {
     const screenHeight = Dimensions.get('screen').height;
@@ -186,7 +185,9 @@ class CustomersListScreen extends Component {
             style={styles.fab}
             large
             icon="plus"
-            onPress={() => console.log('Pressed')}
+            onPress={() => {
+              this.props.navigation.replace('NewCustomer');
+            }}
             color={'#fce86d'}
           />
         </View>

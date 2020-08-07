@@ -22,16 +22,14 @@ export default class Splash extends Component {
       animating: true,
     };
   }
-  
-  async componentDidMount() {
 
-      setTimeout( () => {
-        this.setState({
-          animating: false,
-        });
-        this.props.navigation.replace('Login');
-     },3000);
-    
+  async componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        animating: false,
+      });
+      this.props.navigation.replace('Login');
+    }, 3000);
 
     // retrieveData().then((userData) => {
     //   console.log('Enter');
