@@ -1,19 +1,19 @@
-import React from 'react'
-import { Header } from 'react-native-elements'
+import React from 'react';
+import {Header} from 'react-native-elements';
 
-import HamburgerMenu from './HamburgerMenu'
+import HamburgerMenu from './HamburgerMenu';
 
-const MyHeader = props => {
+const MyHeader = (props) => {
   return (
     <Header
       leftComponent={<HamburgerMenu navigation={props.navigation} />}
       centerComponent={{
         text: props.title,
-        style: { color: '#fff', fontWeight: 'bold' }
+        style: {color: '#fff', fontWeight: 'bold', fontSize: 20},
       }}
-      statusBarProps={{ barStyle: 'light-content' }}
+      statusBarProps={{barStyle: 'light-content'}}
     />
-  )
-}
+  );
+};
 
-export default MyHeader
+export default MyHeader;

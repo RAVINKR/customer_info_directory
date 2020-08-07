@@ -29,7 +29,7 @@ export default class Splash extends Component {
         this.setState({
           animating: false,
         });
-        this.props.navigation.replace('Login');
+        this.props.navigation.replace('Customers');
      },3000);
     
 

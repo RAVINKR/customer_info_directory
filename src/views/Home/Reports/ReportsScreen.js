@@ -24,9 +24,8 @@ import {
 } from 'react-native-responsive-screen';
 import Styles from '../../../shared/Styles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {FAB} from 'react-native-paper';
 
-class CustomersListScreen extends Component {
+class ReportsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -134,7 +133,7 @@ class CustomersListScreen extends Component {
     const navbarHeight = screenHeight - windowHeight + StatusBar.currentHeight;
     return (
       <View style={styles.container}>
-        <MyHeader navigation={this.props.navigation} title="Customers" />
+        <MyHeader navigation={this.props.navigation} title="Reports" />
         <View style={Styles.searchInputView}>
           <Input
             inputStyle={Styles.searchTextStyle}
@@ -181,15 +180,6 @@ class CustomersListScreen extends Component {
             </View>
           )}
         </KeyboardAwareScrollView>
-        <View>
-          <FAB
-            style={styles.fab}
-            large
-            icon="plus"
-            onPress={() => console.log('Pressed')}
-            color={'#fce86d'}
-          />
-        </View>
       </View>
     );
   }
@@ -200,13 +190,6 @@ const styles = StyleSheet.create({
     width: wp('100%'),
     height: hp('100%'),
     backgroundColor: '#f0f4f5',
-  },
-  fab: {
-    position: 'absolute',
-    margin: 30,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#bdccd1',
   },
 });
 
@@ -253,4 +236,4 @@ const customers = [
   },
 ];
 
-export default CustomersListScreen;
+export default ReportsScreen;
