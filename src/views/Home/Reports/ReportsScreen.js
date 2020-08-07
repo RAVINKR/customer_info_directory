@@ -162,7 +162,7 @@ class ReportsScreen extends Component {
           {this.state.customersList.length !== 0 ? (
             <View style={(Styles.FlatListView, {marginBottom: navbarHeight})}>
               <FlatList
-                style={(Styles.FlatList, {marginBottom: navbarHeight + 60})}
+                style={(Styles.FlatList, {marginBottom: navbarHeight})}
                 data={this.state.customersList}
                 renderItem={this.renderItem}
                 keyExtractor={(item) => item.id}
