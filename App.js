@@ -10,6 +10,7 @@ import LoginScreen from './src/views/Login/LoginScreen';
 import CustomersListScreen from './src/views/Home/Customers/CustomersListScreen';
 import ReportsScreen from './src/views/Home/Reports/ReportsScreen';
 import NewCustomerScreen from './src/views/Home/Customers/NewCustomerScreen';
+import CustomerDetailsScreen from './src/views/Home/Customers/CustomerDetailsScreen';
 
 export default class App extends Component {
   constructor(props) {
@@ -39,6 +40,11 @@ export default class App extends Component {
           <MainStack.Screen
             name="NewCustomer"
             component={NewCustomerScreen}
+            options={{headerShown: false}}
+          />
+          <MainStack.Screen
+            name="Details"
+            component={CustomerDetailsScreen}
             options={{headerShown: false}}
           />
         </MainStack.Navigator>

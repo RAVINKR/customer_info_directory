@@ -87,9 +87,9 @@ class CustomersListScreen extends Component {
         <View>
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={() => {
-              alert(item.name);
-            }}>
+            onPress={() =>
+              this.props.navigation.navigate('Details', {customer: item})
+            }>
             <View
               style={{
                 flex: 1,

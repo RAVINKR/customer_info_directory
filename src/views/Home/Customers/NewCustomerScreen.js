@@ -30,10 +30,10 @@ class NewCustomerScreen extends Component {
 
   _onChangePhone = (num) => {
     console.log('Mobile Number: ' + num);
-    // this.setState({
-    //   loading: true,
-    //   phoneNumber: num,
-    // });
+    this.setState({
+      loading: true,
+      phoneNumber: num,
+    });
 
     // this.state.userDatas.map((element) => {
     //   if (element.num === num) {
@@ -43,6 +43,14 @@ class NewCustomerScreen extends Component {
     //     });
     //   }
     // });
+  };
+
+  _onChangeName = (name) => {
+    console.log('Name: ' + name);
+    this.setState({
+      loading: true,
+      name: name,
+    });
   };
 
   render() {
@@ -76,10 +84,11 @@ class NewCustomerScreen extends Component {
               <View>
                 <Text style={styles.labelText}>Mobile Number :</Text>
                 <Input
-                  placeholder="Phone"
+                  placeholder=""
                   onChangeText={(val) => this._onChangePhone(val)}
                   returnKeyType="next"
                   value={this.state.phoneNumber}
+                  keyboardType="phone-pad"
                   autoCapitalize="none"
                   ref="PhoneNumberInput"
                   inputContainerStyle={{
@@ -95,7 +104,7 @@ class NewCustomerScreen extends Component {
               <View>
                 <Text style={styles.labelText}>Name :</Text>
                 <Input
-                  placeholder="Name"
+                  placeholder=""
                   onChangeText={(val) => this._onChangeName(val)}
                   returnKeyType="next"
                   value={this.state.name}

@@ -86,9 +86,10 @@ class ReportsScreen extends Component {
         <View>
           <TouchableOpacity
             activeOpacity={0.9}
-            onPress={() => {
-              alert(item.name);
-            }}>
+            // onPress={() => {
+            //   alert(item.name);
+            // }}
+            >
             <View
               style={{
                 flex: 1,
