@@ -63,7 +63,10 @@ class CustomersListScreen extends Component {
     var FormattedQuery = searchVal.toLowerCase();
     const data = this.state.customersList4Search.filter((items) => {
       console.log('items.name.toLowerCase()' + items.name.toLowerCase());
-      if (items.name.toLowerCase().includes(FormattedQuery)) {
+      if (
+        items.name.toLowerCase().includes(FormattedQuery) ||
+        items.mob.toString().includes(FormattedQuery)
+      ) {
         this.setState({
           loading: false,
         });
@@ -216,41 +219,57 @@ const customers = [
     id: 1,
     name: 'Sudheesh P S',
     mob: 9685748596,
+    place: 'Wayanad',
+    temp: '98.9*C',
   },
   {
     id: 2,
     name: 'Nithin Krishnan',
     mob: 9748596586,
+    place: 'Thrissur',
+    temp: '99.9*C',
   },
   {
     id: 3,
     name: 'Sreeshma Sijil',
     mob: 9674658565,
+    place: 'Kannur',
+    temp: '98.7*C',
   },
   {
     id: 4,
     name: 'Sreenath',
     mob: 8574965486,
+    place: 'Malappuram',
+    temp: '99.7*C',
   },
   {
     id: 11,
     name: 'Sudheesh P S',
     mob: 9685748596,
+    place: 'Mananthavady',
+    temp: '98.9*C',
   },
   {
     id: 12,
     name: 'Nithin Krishnan',
     mob: 9748596586,
+    place: 'Thrissur',
+    temp: '99.9*C',
   },
   {
     id: 13,
     name: 'Sreeshma Sijil',
     mob: 9674658565,
+    place: 'Kannur',
+    temp: '98.7*C',
   },
   {
     id: 14,
     name: 'Sreenath',
     mob: 8574965486,
+    place: 'Malappuram',
+    temp: '99.7*C',
   },
 ];
 

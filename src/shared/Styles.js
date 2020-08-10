@@ -81,6 +81,14 @@ const Styles = StyleSheet.create({
     // fontFamily: 'WorkSans-SemiBold',
     paddingEnd: 5,
   },
+  validationError: {
+    alignSelf: 'flex-start',
+    color: 'red',
+    // fontFamily: 'SourceSansPro-Regular',
+    fontSize: 12,
+    bottom: 20,
+    marginStart: wp('6%'),
+  },
 });
 
 export default Styles;

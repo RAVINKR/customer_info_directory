@@ -62,7 +62,10 @@ class ReportsScreen extends Component {
     var FormattedQuery = searchVal.toLowerCase();
     const data = this.state.customersList4Search.filter((items) => {
       console.log('items.name.toLowerCase()' + items.name.toLowerCase());
-      if (items.name.toLowerCase().includes(FormattedQuery)) {
+      if (
+        items.name.toLowerCase().includes(FormattedQuery) ||
+        items.mob.toString().includes(FormattedQuery)
+      ) {
         this.setState({
           loading: false,
         });
@@ -89,7 +92,7 @@ class ReportsScreen extends Component {
             // onPress={() => {
             //   alert(item.name);
             // }}
-            >
+          >
             <View
               style={{
                 flex: 1,
@@ -126,7 +129,6 @@ class ReportsScreen extends Component {
       </Card>
     );
   };
-  
 
   render() {
     const screenHeight = Dimensions.get('screen').height;

@@ -1,6 +1,6 @@
 //import liraries
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, KeyboardAvoidingView} from 'react-native';
 import MyHeader from '../../../components/MyHeader';
 import {
   widthPercentageToDP as wp,
@@ -9,8 +9,8 @@ import {
 import {Header, Input, Button} from 'react-native-elements';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import Styles from '../../../shared/Styles';
 
-// create a component
 class NewCustomerScreen extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +23,12 @@ class NewCustomerScreen extends Component {
       name: '',
       nameErr: false,
       nameErrMsg: '',
+      place: '',
+      placeErr: false,
+      placeErrMsg: '',
+      temperature: '',
+      temperatureErr: false,
+      temperatureErrMsg: '',
     };
   }
 
@@ -30,10 +36,19 @@ class NewCustomerScreen extends Component {
 
   _onChangePhone = (num) => {
     console.log('Mobile Number: ' + num);
-    this.setState({
-      loading: true,
-      phoneNumber: num,
-    });
+    if (num.trim() !== '') {
+      this.setState({
+        phoneNumberErr: false,
+        phoneNumber: num,
+      });
+    } else {
+      this.setState({
+        phoneNumber: num,
+        phoneNumberErr: true,
+        phoneNumberErrMsg: 'Please enter your mobile number',
+      });
+      this.refs.PhoneNumberInput.shake();
+    }
 
     // this.state.userDatas.map((element) => {
     //   if (element.num === num) {
@@ -47,10 +62,53 @@ class NewCustomerScreen extends Component {
 
   _onChangeName = (name) => {
     console.log('Name: ' + name);
-    this.setState({
-      loading: true,
-      name: name,
-    });
+    if (name.trim() !== '') {
+      this.setState({
+        nameErr: false,
+        name: name,
+      });
+    } else {
+      this.setState({
+        name: name,
+        nameErr: true,
+        nameErrMsg: 'Please enter your name',
+      });
+      this.refs.NameInput.shake();
+    }
+  };
+
+  _onChangePlace = (place) => {
+    console.log('Place : ' + place);
+    if (place.trim() !== '') {
+      this.setState({
+        placeErr: false,
+        place: place,
+      });
+    } else {
+      this.setState({
+        place: place,
+        placeErr: true,
+        placeErrMsg: 'Please enter your place',
+      });
+      this.refs.PlaceInput.shake();
+    }
+  };
+
+  _onChangeTemperature = (temp) => {
+    console.log('Temperature: ' + temp);
+    if (temp.trim() !== '') {
+      this.setState({
+        temperatureErr: false,
+        temperature: temp,
+      });
+    } else {
+      this.setState({
+        temperatureErr: true,
+        temperature: temp,
+        temperatureErrMsg: 'Please enter your body temperature',
+      });
+      this.refs.TemperatureInput.shake();
+    }
   };
 
   render() {
@@ -79,9 +137,9 @@ class NewCustomerScreen extends Component {
           containerStyle={styles.headerContainerStyle}
         />
         <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
-          <View style={{margin: wp('8%')}}>
+          <View style={{marginTop: wp('8%')}}>
             <View style={{flexDirection: 'column'}}>
-              <View>
+              <View style={styles.itemStyle}>
                 <Text style={styles.labelText}>Mobile Number :</Text>
                 <Input
                   placeholder=""
@@ -95,13 +153,19 @@ class NewCustomerScreen extends Component {
                     ...styles.InputContainerStyle,
                     borderColor: this.state.phoneNumberErr ? 'red' : '#B0B0B0',
                   }}
-                  inputStyle={{fontSize: 14}}
+                  inputStyle={styles.InputStyle}
                   onSubmitEditing={() => {
                     this.refs.NameInput.focus();
                   }}
                 />
               </View>
-              <View>
+              {this.state.phoneNumberErr && (
+                <Text
+                  style={{...Styles.validationError, marginStart: wp('10%')}}>
+                  {this.state.phoneNumberErrMsg}
+                </Text>
+              )}
+              <View style={styles.itemStyle}>
                 <Text style={styles.labelText}>Name :</Text>
                 <Input
                   placeholder=""
@@ -114,15 +178,70 @@ class NewCustomerScreen extends Component {
                     ...styles.InputContainerStyle,
                     borderColor: this.state.nameErr ? 'red' : '#B0B0B0',
                   }}
-                  inputStyle={{fontSize: 14}}
+                  inputStyle={styles.InputStyle}
                   onSubmitEditing={() => {
-                    this.refs.NameInput.focus();
+                    this.refs.PlaceInput.focus();
                   }}
                 />
               </View>
+              {this.state.nameErr && (
+                <Text
+                  style={{...Styles.validationError, marginStart: wp('10%')}}>
+                  {this.state.nameErrMsg}
+                </Text>
+              )}
+              <View style={styles.itemStyle}>
+                <Text style={styles.labelText}>Place :</Text>
+                <Input
+                  placeholder=""
+                  onChangeText={(val) => this._onChangePlace(val)}
+                  returnKeyType="next"
+                  value={this.state.place}
+                  autoCapitalize="none"
+                  ref="PlaceInput"
+                  inputContainerStyle={{
+                    ...styles.InputContainerStyle,
+                    borderColor: this.state.placeErr ? 'red' : '#B0B0B0',
+                  }}
+                  inputStyle={styles.InputStyle}
+                  onSubmitEditing={() => {
+                    this.refs.TemperatureInput.focus();
+                  }}
+                />
+              </View>
+              {this.state.placeErr && (
+                <Text
+                  style={{...Styles.validationError, marginStart: wp('10%')}}>
+                  {this.state.placeErrMsg}
+                </Text>
+              )}
+              <View style={styles.itemStyle}>
+                <Text style={styles.labelText}>Temperature :</Text>
+                <Input
+                  placeholder=""
+                  onChangeText={(val) => this._onChangeTemperature(val)}
+                  returnKeyType="next"
+                  value={this.state.temperature}
+                  autoCapitalize="none"
+                  ref="TemperatureInput"
+                  inputContainerStyle={{
+                    ...styles.InputContainerStyle,
+                    borderColor: this.state.temperatureErr ? 'red' : '#B0B0B0',
+                  }}
+                  inputStyle={styles.InputStyle}
+                  onSubmitEditing={() => {
+                    this.refs.TemperatureInput.focus();
+                  }}
+                />
+              </View>
+              {this.state.temperatureErr && (
+                <Text
+                  style={{...Styles.validationError, marginStart: wp('10%')}}>
+                  {this.state.temperatureErrMsg}
+                </Text>
+              )}
               <View style={styles.addButtonView}>
                 <Button
-                  raised
                   title="Entry"
                   buttonStyle={styles.addButtonStyle}
                   containerStyle={styles.addButtonContainerStyle}
@@ -152,15 +271,15 @@ const styles = StyleSheet.create({
     height: wp('25%'),
   },
   addButtonView: {
-    marginLeft: wp('2%'),
-    marginRight: wp('2%'),
+    marginLeft: wp('10%'),
+    marginRight: wp('10%'),
     justifyContent: 'flex-end',
     alignSelf: 'flex-end',
-    marginTop: wp('10%'),
+    marginTop: wp('2%'),
   },
   addButtonStyle: {
     width: wp('35%'),
-    borderRadius: hp('20%'),
+    borderRadius: hp('25%'),
     height: hp('8%'),
     backgroundColor: '#bdccd1',
   },
@@ -173,6 +292,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Lato-Bold',
     fontSize: hp('3%'),
     fontWeight: 'bold',
+  },
+  itemStyle: {
+    marginStart: wp('6%'),
+    marginEnd: wp('5%'),
   },
   labelText: {
     fontSize: 16,
@@ -188,7 +311,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#ffffff',
     borderWidth: 1,
-    marginTop: 10,
+    marginTop: 5,
+  },
+  InputStyle: {
+    fontSize: 14,
+    color: '#8a8787',
   },
 });
 

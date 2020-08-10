@@ -12,6 +12,7 @@ import {
 import {Input, Button, CheckBox, Overlay} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import AsyncStorage from '@react-native-community/async-storage';
 import Loader from '../../shared/Loader';
 import LoginForm from '../../components/LoginForm';
 import {
@@ -19,6 +20,7 @@ import {
   removeAndroidBackButtonHandler,
   exitAlert,
 } from '../../shared/AndroidBackHandler';
+import Styles from '../../shared/Styles';
 
 export default class LoginScreen extends Component {
   constructor(props) {
@@ -124,6 +126,7 @@ export default class LoginScreen extends Component {
       this.setState({
         loading: true,
       });
+      AsyncStorage.setItem('userName', this.state.username);
       this.props.navigation.replace('Customers');
     }
   };
@@ -169,7 +172,7 @@ export default class LoginScreen extends Component {
               }}
             />
             {this.state.userNameErr && (
-              <Text style={[styles.validationError]}>
+              <Text style={[Styles.validationError]}>
                 {this.state.userNameErrMessage}
               </Text>
             )}
@@ -203,7 +206,7 @@ export default class LoginScreen extends Component {
               // }}
             />
             {this.state.passwordErr && (
-              <Text style={[styles.validationError]}>
+              <Text style={[Styles.validationError]}>
                 {this.state.passwordErrMessage}
               </Text>
             )}
@@ -248,13 +251,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#ffffff',
     textAlign: 'center',
-  },
-  validationError: {
-    alignSelf: 'flex-start',
-    color: 'red',
-    // fontFamily: 'SourceSansPro-Regular',
-    fontSize: 12,
-    bottom: 20,
-    marginStart: 16,
   },
 });

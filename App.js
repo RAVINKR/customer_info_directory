@@ -11,6 +11,7 @@ import CustomersListScreen from './src/views/Home/Customers/CustomersListScreen'
 import ReportsScreen from './src/views/Home/Reports/ReportsScreen';
 import NewCustomerScreen from './src/views/Home/Customers/NewCustomerScreen';
 import CustomerDetailsScreen from './src/views/Home/Customers/CustomerDetailsScreen';
+import DrawerContent from './src/components/DrawerContent';
 
 export default class App extends Component {
   constructor(props) {
@@ -55,27 +56,10 @@ export default class App extends Component {
 
 function MyDrawer() {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
       <Drawer.Screen name="Customers" component={CustomersListScreen} />
       <Drawer.Screen name="Reports" component={ReportsScreen} />
     </Drawer.Navigator>
-  );
-}
-
-function CustomerScreens() {
-  return (
-    <MainStack.Navigator initialRouteName="Customers">
-      <MainStack.Screen
-        name="Customers"
-        component={CustomersListScreen}
-        options={{headerShown: false}}
-      />
-      <MainStack.Screen
-        name="NewCustomer"
-        component={NewCustomerScreen}
-        options={{headerShown: false}}
-      />
-    </MainStack.Navigator>
   );
 }
 

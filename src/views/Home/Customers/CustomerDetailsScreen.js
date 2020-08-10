@@ -16,6 +16,8 @@ class CustomerDetailsScreen extends Component {
       loading: false,
       name: '',
       mobileNumber: '',
+      place: '',
+      temperature: '',
     };
   }
 
@@ -30,10 +32,14 @@ class CustomerDetailsScreen extends Component {
     );
     var cust_name = this.props.route.params.customer.name;
     var cust_mob = this.props.route.params.customer.mob;
+    var cust_place = this.props.route.params.customer.place;
+    var cust_temp = this.props.route.params.customer.temp;
 
     this.setState({
       name: cust_name,
       mobileNumber: cust_mob,
+      place: cust_place,
+      temperature: cust_temp,
     });
   };
 
@@ -88,6 +94,32 @@ class CustomerDetailsScreen extends Component {
                   value={this.state.name}
                   autoCapitalize="none"
                   ref="NameInput"
+                  inputContainerStyle={styles.InputContainerStyle}
+                  inputStyle={styles.InputStyle}
+                  editable={false}
+                />
+              </View>
+              <View>
+                <Text style={styles.labelText}>Place :</Text>
+                <Input
+                  placeholder=""
+                  returnKeyType="next"
+                  value={this.state.place}
+                  autoCapitalize="none"
+                  ref="PlaceInput"
+                  inputContainerStyle={styles.InputContainerStyle}
+                  inputStyle={styles.InputStyle}
+                  editable={false}
+                />
+              </View>
+              <View>
+                <Text style={styles.labelText}>Temperature :</Text>
+                <Input
+                  placeholder=""
+                  returnKeyType="next"
+                  value={this.state.temperature}
+                  autoCapitalize="none"
+                  ref="TemperatureInput"
                   inputContainerStyle={styles.InputContainerStyle}
                   inputStyle={styles.InputStyle}
                   editable={false}
