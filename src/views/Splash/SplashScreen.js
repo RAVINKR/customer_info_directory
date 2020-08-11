@@ -28,7 +28,7 @@ export default class Splash extends Component {
       this.setState({
         animating: false,
       });
-      this.props.navigation.replace('Customers');
+      this.props.navigation.replace('Login');
     }, 3000);
 
     // retrieveData().then((userData) => {

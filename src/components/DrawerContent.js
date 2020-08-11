@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {Component} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {
   useTheme,
@@ -19,54 +19,87 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-export default function DrawerContent(props) {
-  return (
-    <View style={{flex: 1}}>
-      <DrawerContentScrollView {...props}>
-        <View style={styles.drawerContent}>
-          <View style={styles.userInfoSection}>
-            <Image
-              source={require('../images/user-info.jpg')}
-              resizeMode="cover"
-              style={styles.imageStyle}
-            />
-          </View>
+export default class DrawerContent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isActive: false,
+    };
+  }
 
-          <Drawer.Section style={styles.drawerSection}>
-            <DrawerItem
-              icon={({color, size}) => (
-                <Icon name="account-group-outline" color={color} size={size} />
-              )}
-              label="Customers"
-              onPress={() => {
-                props.navigation.navigate('Customers');
-              }}
-            />
-            <DrawerItem
-              icon={({color, size}) => (
-                <Icon name="file-chart" color={color} size={size} />
-              )}
-              label="Reports"
-              onPress={() => {
-                props.navigation.navigate('Reports');
-              }}
-            />
-          </Drawer.Section>
-        </View>
-      </DrawerContentScrollView>
-      <Drawer.Section style={styles.bottomDrawerSection}>
-        <DrawerItem
-          icon={({color, size}) => (
-            <Icon name="exit-to-app" color={color} size={size} />
-          )}
-          label="Sign Out"
-          onPress={() => {
-            props.navigation.navigate('Login');
-          }}
-        />
-      </Drawer.Section>
-    </View>
-  );
+  render() {
+    return (
+      <View style={{flex: 1}}>
+        <DrawerContentScrollView {...this.props}>
+          <View style={styles.drawerContent}>
+            <View style={styles.userInfoSection}>
+              <Image
+                source={require('../images/user-info.jpg')}
+                resizeMode="cover"
+                style={styles.imageStyle}
+              />
+            </View>
+
+            <Drawer.Section style={styles.drawerSection}>
+              <DrawerItem
+                icon={({color, size}) => (
+                  <Icon
+                    name="account-group-outline"
+                    color={color}
+                    size={size}
+                  />
+                )}
+                label="Customers"
+                onPress={() => {
+                  this.setState(
+                    {
+                      isActive: true,
+                    },
+                    () => {
+                      this.props.navigation.navigate('Customers');
+                    },
+                  );
+                }}
+                // activeTintColor={
+                //   this.state.isActive === true ? '#fb0005' : '#f4f4f4'
+                // }
+              />
+              <DrawerItem
+                icon={({color, size}) => (
+                  <Icon name="file-chart" color={color} size={size} />
+                )}
+                label="Reports"
+                onPress={() => {
+                  this.setState(
+                    {
+                      isActive: true,
+                    },
+                    () => {
+                      this.props.navigation.navigate('Reports');
+                    },
+                  );
+                }}
+                // activeTintColor={
+                //   this.state.isActive === true ? '#fb0005' : '#f4f4f4'
+                // }
+              />
+            </Drawer.Section>
+          </View>
+        </DrawerContentScrollView>
+        <Drawer.Section style={styles.bottomDrawerSection}>
+          <DrawerItem
+            icon={({color, size}) => (
+              <Icon name="exit-to-app" color={color} size={size} />
+            )}
+            label="Sign Out"
+            onPress={() => {
+              this.props.navigation.navigate('Login');
+            }}
+          />
+        </Drawer.Section>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
