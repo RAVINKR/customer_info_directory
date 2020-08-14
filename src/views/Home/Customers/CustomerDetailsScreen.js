@@ -8,6 +8,12 @@ import {
 import {Header, Input, Button} from 'react-native-elements';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import {
+  handleAndroidBackButton,
+  removeAndroidBackButtonHandler,
+  exitAlert,
+} from '../../../shared/AndroidBackHandler.js';
+import Loader from '../../../shared/Loader';
 
 class CustomerDetailsScreen extends Component {
   constructor(props) {
@@ -22,7 +28,19 @@ class CustomerDetailsScreen extends Component {
   }
 
   componentDidMount() {
-    this._init();
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this._init();
+      handleAndroidBackButton(this.navigateBack);
+    });
+  }
+
+  navigateBack = () => {
+    this.props.navigation.navigate('Customers');
+  };
+
+  componentWillUnmount() {
+    this._unsubscribe();
+    removeAndroidBackButtonHandler();
   }
 
   _init = () => {
@@ -35,12 +53,29 @@ class CustomerDetailsScreen extends Component {
     var cust_place = this.props.route.params.customer.place;
     var cust_temp = this.props.route.params.customer.temp;
 
-    this.setState({
-      name: cust_name,
-      mobileNumber: cust_mob,
-      place: cust_place,
-      temperature: cust_temp,
-    });
+    // this.setState({
+    //   name: cust_name,
+    //   mobileNumber: cust_mob,
+    //   place: cust_place,
+    //   temperature: cust_temp,
+    // });
+
+    this.setState(
+      {
+        loading: true,
+      },
+      () => {
+        setTimeout(() => {
+          this.setState({
+            loading: false,
+            name: cust_name,
+            mobileNumber: cust_mob,
+            place: cust_place,
+            temperature: cust_temp,
+          });
+        }, 500);
+      },
+    );
   };
 
   render() {
@@ -128,6 +163,7 @@ class CustomerDetailsScreen extends Component {
             </View>
           </View>
         </KeyboardAwareScrollView>
+        {this.state.loading === true && <Loader />}
       </View>
     );
   }

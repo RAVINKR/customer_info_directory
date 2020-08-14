@@ -123,11 +123,29 @@ export default class LoginScreen extends Component {
 
   _doLogin = () => {
     if (this._isValidated()) {
-      this.setState({
-        loading: true,
-      });
-      AsyncStorage.setItem('userName', this.state.username);
-      this.props.navigation.replace('Customers');
+      // this.setState({
+      //   loading: true,
+      // });
+      // AsyncStorage.setItem('userName', this.state.username);
+      // this.props.navigation.replace('Customers');
+      this.setState(
+        {
+          loading: true,
+        },
+        () => {
+          setTimeout(() => {
+            this.setState(
+              {
+                loading: false,
+              },
+              () => {
+                AsyncStorage.setItem('userName', this.state.username);
+                this.props.navigation.replace('Customers');
+              },
+            );
+          }, 2000);
+        },
+      );
     }
   };
 

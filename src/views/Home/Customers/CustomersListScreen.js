@@ -25,6 +25,9 @@ import {
 import Styles from '../../../shared/Styles';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {FAB} from 'react-native-paper';
+import Loader from '../../../shared/Loader';
+import {queryAllCustomers} from '../../../storage/allSchemas';
+import realm from '../../../storage/allSchemas';
 
 class CustomersListScreen extends Component {
   constructor(props) {
@@ -32,16 +35,39 @@ class CustomersListScreen extends Component {
     this.state = {
       loading: false,
       search_term: '',
-      customersList: customers,
+      customersList: [],
+      // customersList: [],
       customersList4Search: customers,
     };
+    // this._reloadData();
+    // realm.addListener('change', () => {
+    //   this._reloadData();
+    // });
   }
 
   componentDidMount() {
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      this._init();
       handleAndroidBackButton(this.navigateBack);
     });
   }
+
+  _init = () => {
+    this.setState(
+      {
+        loading: true,
+      },
+      () => {
+        setTimeout(() => {
+          this.setState({
+            loading: false,
+            customersList: customers,
+          });
+          // this._reloadData();
+        }, 1000);
+      },
+    );
+  };
 
   /**
    * Device back button functionality.
@@ -50,6 +76,11 @@ class CustomersListScreen extends Component {
   navigateBack = () => {
     exitAlert();
   };
+
+  componentWillUnmount() {
+    this._unsubscribe();
+    removeAndroidBackButtonHandler();
+  }
 
   /**
    * search functionality
@@ -130,6 +161,22 @@ class CustomersListScreen extends Component {
     );
   };
 
+  _reloadData = () => {
+    queryAllCustomers()
+      .then((customers) => {
+        console.log('Customers: ', JSON.stringify(customers));
+        this.setState({
+          customersList: customers,
+        });
+      })
+      .catch((error) => {
+        this.setState({
+          customersList: [],
+        });
+      });
+    console.log('reloadData');
+  };
+
   render() {
     const screenHeight = Dimensions.get('screen').height;
     const windowHeight = Dimensions.get('window').height;
@@ -194,6 +241,7 @@ class CustomersListScreen extends Component {
             color={'#fce86d'}
           />
         </View>
+        {this.state.loading === true && <Loader />}
       </View>
     );
   }

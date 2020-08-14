@@ -10,6 +10,12 @@ import {Header, Input, Button} from 'react-native-elements';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import Styles from '../../../shared/Styles';
+import {
+  handleAndroidBackButton,
+  removeAndroidBackButtonHandler,
+  exitAlert,
+} from '../../../shared/AndroidBackHandler.js';
+import {insertNewCustomer} from '../../../storage/allSchemas';
 
 class NewCustomerScreen extends Component {
   constructor(props) {
@@ -32,7 +38,20 @@ class NewCustomerScreen extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this._unsubscribe = this.props.navigation.addListener('focus', () => {
+      handleAndroidBackButton(this.navigateBack);
+    });
+  }
+
+  navigateBack = () => {
+    this.props.navigation.navigate('Customers');
+  };
+
+  componentWillUnmount() {
+    this._unsubscribe();
+    removeAndroidBackButtonHandler();
+  }
 
   _onChangePhone = (num) => {
     console.log('Mobile Number: ' + num);
@@ -110,6 +129,79 @@ class NewCustomerScreen extends Component {
       this.refs.TemperatureInput.shake();
     }
   };
+
+  _addNewCustomer = () => {
+    if (this._isValidated()) {
+      const newCustomer = {
+        id: Math.floor(Date.now() / 1000),
+        mobile: this.state.phoneNumber,
+        name: this.state.name,
+        place: this.state.place,
+        temperature: this.state.temperature,
+        done: true,
+      };
+      insertNewCustomer(newCustomer)
+        .then(() => {
+          alert('Success');
+          this.props.navigation.navigate('Customers');
+        })
+        .catch((error) => {
+          alert(`error ${error}`);
+        });
+    }
+  };
+
+  _isValidated() {
+    var is_validated = true;
+    if (this.state.phoneNumber.trim() !== '') {
+      this.setState({
+        phoneNumberErr: false,
+      });
+    } else {
+      this.setState({
+        phoneNumberErr: true,
+        phoneNumberErrMsg: 'Please enter your phone number',
+      });
+      is_validated = false;
+    }
+
+    if (this.state.name.trim() !== '') {
+      this.setState({
+        nameErr: false,
+      });
+    } else {
+      this.setState({
+        nameErr: true,
+        nameErrMsg: 'Please enter your name',
+      });
+      is_validated = false;
+    }
+
+    if (this.state.place.trim() !== '') {
+      this.setState({
+        placeErr: false,
+      });
+    } else {
+      this.setState({
+        placeErr: true,
+        placeErrMsg: 'Please enter your place',
+      });
+      is_validated = false;
+    }
+
+    if (this.state.temperature.trim() !== '') {
+      this.setState({
+        temperatureErr: false,
+      });
+    } else {
+      this.setState({
+        temperatureErr: true,
+        temperatureErrMsg: 'Please enter your temperature',
+      });
+      is_validated = false;
+    }
+    return is_validated;
+  }
 
   render() {
     return (
@@ -247,7 +339,7 @@ class NewCustomerScreen extends Component {
                   containerStyle={styles.addButtonContainerStyle}
                   titleStyle={styles.addButtonTitleStyle}
                   onPress={() => {
-                    //   this._doEmailNotification(true);
+                    this._addNewCustomer();
                   }}
                 />
               </View>

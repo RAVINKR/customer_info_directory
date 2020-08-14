@@ -18,12 +18,14 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import Loader from '../shared/Loader';
 
 export default class DrawerContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isActive: false,
+      loading: false,
     };
   }
 
@@ -93,10 +95,27 @@ export default class DrawerContent extends Component {
             )}
             label="Sign Out"
             onPress={() => {
-              this.props.navigation.navigate('Login');
+              this.setState(
+                {
+                  loading: true,
+                },
+                () => {
+                  setTimeout(() => {
+                    this.setState(
+                      {
+                        loading: false,
+                      },
+                      () => {
+                        this.props.navigation.navigate('Login');
+                      },
+                    );
+                  }, 2000);
+                },
+              );
             }}
           />
         </Drawer.Section>
+        {this.state.loading === true && <Loader />}
       </View>
     );
   }
